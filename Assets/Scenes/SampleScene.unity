@@ -34071,6 +34071,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   items:
   - {fileID: 5653795091183578018, guid: d4145d7960760ec4caf5975a033674eb, type: 3}
+  - {fileID: 5937731855086075112, guid: 9243913d65f4782439c636985421e6ed, type: 3}
   spawnInterval: 1
   pickupSpawnInterval: 5
   obstacleSpawnInterval: 0.5
@@ -34180,6 +34181,14 @@ PrefabInstance:
     - target: {fileID: 7087033227875817377, guid: 9e27117f2499fc24db3db7de3a62a201, type: 3}
       propertyPath: brakingZoneStart
       value: -20
+      objectReference: {fileID: 0}
+    - target: {fileID: 8996554623930488375, guid: 9e27117f2499fc24db3db7de3a62a201, type: 3}
+      propertyPath: m_Size.y
+      value: 0.3667667
+      objectReference: {fileID: 0}
+    - target: {fileID: 8996554623930488375, guid: 9e27117f2499fc24db3db7de3a62a201, type: 3}
+      propertyPath: m_Offset.y
+      value: -0.31661665
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

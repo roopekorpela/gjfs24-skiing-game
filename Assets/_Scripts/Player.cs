@@ -84,11 +84,24 @@ public class Player : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
+        Debug.Log("collided with: " + other.gameObject.name);
+
         if (other.CompareTag("Obstacle"))
         {
-            Debug.Log("collided with: " + other.gameObject.name);
             GameManager.singleton.currentTemperature = GameManager.singleton.minTemperature;
             enabled = false;
+        }
+        else if (other.CompareTag("HotCocoa"))
+        {
+            if(GameManager.singleton.currentTemperature <= 32)
+            {
+                GameManager.singleton.currentTemperature += 5;
+            }
+            else if(GameManager.singleton.currentTemperature >= 32)
+            {
+                GameManager.singleton.currentTemperature = GameManager.singleton.maxTemperature;
+            }
+            Destroy(other.gameObject);
         }
     }
 }
