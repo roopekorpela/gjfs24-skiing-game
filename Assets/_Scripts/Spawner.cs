@@ -3,20 +3,22 @@ using System.Collections;
 
 public class Spawner : MonoBehaviour
 {
-    public GameObject[] items;
-    public float spawnInterval = 1f;
-    public float pickupSpawnInterval = 5f;
-    public float obstacleSpawnInterval = 3f;
+    public GameObject[] obstacles;
+    public GameObject[] pickups;
+
+    public float pickupSpawnInterval = 4f;
+    public float obstacleSpawnInterval = 0.5f;
     public float spawnRange = 8f;
     public Transform playerTrans;
-    public float offSetFromPlayer;
+    public float offsetFromPlayer;
 
     void Start()
     {
-        StartCoroutine(SpawnObjects());
+        StartCoroutine(SpawnObstacles());
+        StartCoroutine(SpawnPickups());
     }
 
-    IEnumerator SpawnObjects()
+    IEnumerator SpawnObstacles()
     {
         while (true)
         {
@@ -24,14 +26,24 @@ public class Spawner : MonoBehaviour
             SpawnObstacle();
         }
     }
+
+    IEnumerator SpawnPickups()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(pickupSpawnInterval);
+            SpawnPickup();
+        }
+    }
     void SpawnPickup()
     {
-        Vector3 spawnPosition = new Vector3(Random.Range(-spawnRange, spawnRange), playerTrans.position.y + offSetFromPlayer, 0f);
+        Vector3 spawnPosition = new Vector3(Random.Range(-spawnRange, spawnRange), playerTrans.position.y + offsetFromPlayer, 0f);
+        Instantiate(pickups[Random.Range(0, pickups.Length)], spawnPosition, Quaternion.identity);
     }
 
     void SpawnObstacle()
     {
-        Vector3 spawnPosition = new Vector3(Random.Range(-spawnRange, spawnRange), playerTrans.position.y + offSetFromPlayer, 0f);
-        Instantiate(items[Random.Range(0, items.Length)], spawnPosition, Quaternion.identity);
+        Vector3 spawnPosition = new Vector3(Random.Range(-spawnRange, spawnRange), playerTrans.position.y + offsetFromPlayer, 0f);
+        Instantiate(obstacles[Random.Range(0, obstacles.Length)], spawnPosition, Quaternion.identity);
     }
 }

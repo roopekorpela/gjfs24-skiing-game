@@ -95,7 +95,7 @@ public class Player : MonoBehaviour
         {
             if(GameManager.singleton.currentTemperature <= 32)
             {
-                GameManager.singleton.currentTemperature += 5;
+                GameManager.singleton.currentTemperature += 2;
             }
             else if(GameManager.singleton.currentTemperature >= 32)
             {
