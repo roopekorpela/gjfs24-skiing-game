@@ -9,5 +9,5 @@ List of bought assets used in this game. Everything else that isn't listed here 
 ### 2D art:
 - [Tiny Ski](https://kenney.nl/assets/tiny-ski)
 
-### Music
-- todo
+### Audio
+- Skiing sound effects from [Zapsplat.com](Zapsplat.com)

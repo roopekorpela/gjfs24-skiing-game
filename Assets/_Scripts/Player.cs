@@ -15,7 +15,8 @@ public class Player : MonoBehaviour
     public Transform playerFeet;
     public SpriteRenderer skis;
     public SpriteRenderer leftLeg, rightLeg;
-
+    public TrailRenderer leftTrail;
+    public TrailRenderer rightTrail;
 
     private bool isMouseBelow;
     private bool isBreakingZone;
