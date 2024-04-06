@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
-
     public static AudioManager singleton;
     public Sound[] sounds;
 
@@ -18,7 +17,6 @@ public class AudioManager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
-
         DontDestroyOnLoad(this);
 
         foreach (Sound s in sounds)
@@ -40,6 +38,7 @@ public class AudioManager : MonoBehaviour
             Debug.LogWarning("Sounds: " + name + " was not found!");
             return;
         }
+
         s.source.Play();
     }
 

@@ -2,6 +2,7 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -14,7 +15,8 @@ public class GameManager : MonoBehaviour
     public Slider sliderThermometer;
     public TextMeshProUGUI thermoText;
     public GameObject replayButton;
-    public TextMeshProUGUI timerText;
+    public TextMeshProUGUI distanceText;
+    public TextMeshProUGUI highscoreText;
 
     [SerializeField]
     public int maxTemperature = 37;
@@ -26,9 +28,8 @@ public class GameManager : MonoBehaviour
 
 
     //Stats:
-    private float totalDistance = 0f;
+    private int totalDistance = 0;
     private bool stopTimer = false;
-    private float highscoreDistance = 0f;
 
     private int nextWallSpawnTriggerPoint = -20;
     private int nextWallSpawnPostionY = -48;
@@ -40,13 +41,17 @@ public class GameManager : MonoBehaviour
     {
         singleton = this;
     }
+    private void Start()
+    {
+        highscoreText.text = PlayerPrefs.GetInt("HighScore").ToString() + "m";
+    }
 
     private void Update()
     {
         if (!stopTimer)
         {
-            totalDistance += Time.deltaTime;
-            DisplayDistance(totalDistance);
+            totalDistance = Mathf.RoundToInt(-player.transform.position.y);
+            distanceText.text = totalDistance + "m"; // Display distance in meters
         }
 
         //Wall Generation:
@@ -63,14 +68,6 @@ public class GameManager : MonoBehaviour
         newWall.transform.position = new Vector2(0, nextWallSpawnPostionY);
         nextWallSpawnPostionY += nextWallSpawnPostionY;
         nextWallSpawnTriggerPoint = nextWallSpawnPostionY + 20;
-    }
-
-    void DisplayDistance(float timeToDisplay)
-    {
-        float minutes = Mathf.FloorToInt(timeToDisplay / 60);
-        float seconds = Mathf.FloorToInt(timeToDisplay % 60);
-        float milliSeconds = (timeToDisplay % 1) * 100;
-        timerText.text = string.Format("{0:00}:{1:00}:{2:00}", minutes, seconds, milliSeconds);
     }
 
     IEnumerator Freezer()
@@ -102,18 +99,18 @@ public class GameManager : MonoBehaviour
     {
         StopCoroutine(Freezer());
         stopTimer = true;
-        totalDistance = 0;
         player.enabled = false;
         replayButton.SetActive(true);
 
-        if(totalDistance > highscoreDistance)
+        if(totalDistance > PlayerPrefs.GetInt("HighScore"))
         {
-            totalDistance = highscoreDistance;
-            Debug.Log("New Best! " + highscoreDistance);
+            Debug.Log("New Best! " + totalDistance);
+            PlayerPrefs.SetInt("HighScore", totalDistance);
+            PlayerPrefs.Save();
         }
         else
         {
-            Debug.Log("You ascended " + highscoreDistance);
+            Debug.Log("You ascended " + totalDistance);
         }
     }
     public void Revive()
@@ -122,5 +119,7 @@ public class GameManager : MonoBehaviour
         player.transform.position = new Vector3(0,0.5f,0);
         player.leftTrail.Clear();
         player.rightTrail.Clear();
+        totalDistance = 0;
+        SceneManager.LoadScene("Gameplay");
     }
 }
