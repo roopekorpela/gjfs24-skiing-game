@@ -24,7 +24,7 @@ Controls
 List of bought assets used in this game. Everything else that isn't listed here is self-made.
 
 ### 2D art:
-- [Tiny Ski](https://kenney.nl/assets/tiny-ski)
+- Environment assets from [Tiny Ski](https://kenney.nl/assets/tiny-ski)
 
 ### Audio
 - Sound effects from [Zapsplat.com](https://www.zapsplat.com/basic-member-home/)
