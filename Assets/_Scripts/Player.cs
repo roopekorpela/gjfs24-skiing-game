@@ -1,3 +1,4 @@
+using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -101,50 +102,6 @@ public class Player : MonoBehaviour
         }
         transform.position += directionalForce;
     }
-
-
-
-    void RotateSkisAndLegs(Vector3 direction)
-    {
-        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        float limitedAngle = Mathf.Clamp(angle + 90, -90, 90);
-        skis.transform.rotation = Quaternion.Euler(0, 0, limitedAngle);
-        leftLeg.transform.rotation = Quaternion.Euler(0, 0, -10);
-        rightLeg.transform.rotation = Quaternion.Euler(0, 0, 10);
-
-        isBreakingZone = angle > brakingZoneStart || angle < brakingZoneEnd;
-    }
-
-    void Accelerate()
-    {
-        currentSpeed = Mathf.Min(currentSpeed + acceleration * Time.deltaTime, maxSpeed);
-        transform.position += Vector3.down * gravitationalPull * Time.deltaTime;
-    }
-
-    void Brake()
-    {
-        if (!brakingSoundPlayed)
-        {
-            AudioManager.singleton.Play("Ski1");
-            Debug.Log("braking");
-            brakingSoundPlayed = true;
-        }
-        currentSpeed = Mathf.Max(currentSpeed - deceleration * Time.deltaTime, 0);
-        if (currentSpeed > 0)
-        {
-            transform.position += Vector3.down * (currentSpeed / maxSpeed) * gravitationalPull * Time.deltaTime;
-        }
-    }
-
-    void ApplyDirectionalForce(Vector3 direction)
-    {
-        Vector3 force = direction * (currentSpeed / maxSpeed) * moveSpeed * Time.deltaTime;
-        if (!isMouseBelow && force.y > 0)
-        {
-            force.y = 0;
-        }
-        transform.position += force;
-    }
     void DrawAccelerationIndicator()
     {
         Debug.DrawLine(new Vector2(-10,playerFeet.position.y), new Vector2(+10, playerFeet.position.y), Color.green);
@@ -158,6 +115,9 @@ public class Player : MonoBehaviour
         {
             GameManager.singleton.currentTemperature = GameManager.singleton.minTemperature;
             enabled = false;
+            StartCoroutine(CameraShake.singelton.ShakeCamera());
+            GameManager.singleton.cameraFollow.enabled = false;
+            StartCoroutine(FallAnimation(0.2f));
         }
         else if (other.CompareTag("HotCocoa"))
         {
@@ -172,4 +132,24 @@ public class Player : MonoBehaviour
             Destroy(other.gameObject);
         }
     }
+
+    IEnumerator FallAnimation(float duration)
+    {
+        Quaternion startRotation = transform.rotation;
+
+        bool isPositiveRotation = Random.Range(0, 2) == 0;
+        float randomAngle = Random.Range(90, 131);
+        float finalAngle = isPositiveRotation ? randomAngle : -randomAngle;
+
+        Quaternion endRotation = Quaternion.Euler(transform.eulerAngles.x, transform.eulerAngles.y, transform.eulerAngles.z + finalAngle);
+        float elapsed = 0.0f;
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            transform.rotation = Quaternion.Lerp(startRotation, endRotation, elapsed / duration);
+            yield return null;
+        }
+        transform.rotation = endRotation;
+    }
+
 }

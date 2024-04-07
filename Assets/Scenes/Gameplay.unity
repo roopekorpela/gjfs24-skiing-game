@@ -35503,6 +35503,7 @@ GameObject:
   - component: {fileID: 1370938701}
   - component: {fileID: 1370938700}
   - component: {fileID: 1370938703}
+  - component: {fileID: 1370938704}
   m_Layer: 0
   m_Name: VirtualCamera
   m_TagString: Untagged
@@ -35592,6 +35593,53 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a8a05de0ac134f4f9d01bef6b9da077, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1370938704
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1370938699}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4679d944e4427bd419cb47aa70e7a0ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animationCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0.4343413
+      outSlope: 0.4343413
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.3041631
+      value: 0.1321106
+      inSlope: -0.16477205
+      outSlope: -0.16477205
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.7499944
+      outWeight: 0.30556074
+    - serializedVersion: 3
+      time: 1
+      value: 0.009429932
+      inSlope: -0.17630664
+      outSlope: -0.17630664
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  start: 0
+  duration: 0.5
 --- !u!1 &1374500058
 GameObject:
   m_ObjectHideFlags: 0
