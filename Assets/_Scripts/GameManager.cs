@@ -3,6 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour
 {
@@ -36,6 +37,7 @@ public class GameManager : MonoBehaviour
 
     public GameObject wallPrefab;
     public Grid grid;
+    private List<GameObject> spawnedWalls = new List<GameObject>();
 
     private void Awake()
     {
@@ -66,8 +68,17 @@ public class GameManager : MonoBehaviour
         Debug.Log("Spawning wall");
         GameObject newWall = Instantiate(wallPrefab, grid.transform);
         newWall.transform.position = new Vector2(0, nextWallSpawnPostionY);
-        nextWallSpawnPostionY += nextWallSpawnPostionY;
-        nextWallSpawnTriggerPoint = nextWallSpawnPostionY + 20;
+        nextWallSpawnPostionY -= 48;
+        nextWallSpawnTriggerPoint = nextWallSpawnPostionY + 28;
+
+        //Handle wall deletion:
+        spawnedWalls.Add(newWall);
+        if(spawnedWalls.Count > 2)
+        {
+            GameObject oldWall = spawnedWalls[0];
+            spawnedWalls.RemoveAt(0);
+            Destroy(oldWall);
+        }
     }
 
     IEnumerator Freezer()
@@ -83,6 +94,8 @@ public class GameManager : MonoBehaviour
         if(currentTemperature <= minTemperature)
         {
             thermoText.text = "dead";
+            StartCoroutine(player.FallAnimation(0.2f));
+            AudioManager.singleton.Play("Freeze");
             EndGame();
         }
     }
@@ -93,6 +106,8 @@ public class GameManager : MonoBehaviour
         cameraFollow.enabled = true;
         StartCoroutine(Freezer());
         stopTimer = false;
+        sliderThermometer.gameObject.SetActive(true);
+        distanceText.gameObject.SetActive(true);
     }
 
     public void EndGame()

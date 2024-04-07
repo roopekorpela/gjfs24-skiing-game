@@ -83,7 +83,7 @@ public class Player : MonoBehaviour
             //braking   
             if (!brakingSoundPlayed)
             {
-                AudioManager.singleton.Play("Ski1");
+                AudioManager.singleton.Play("SkiBrake");
                 Debug.Log("braking");
                 brakingSoundPlayed = true;
             }
@@ -113,15 +113,19 @@ public class Player : MonoBehaviour
 
         if (other.CompareTag("Obstacle"))
         {
-            GameManager.singleton.currentTemperature = GameManager.singleton.minTemperature;
             enabled = false;
-            StartCoroutine(CameraShake.singelton.ShakeCamera());
             GameManager.singleton.cameraFollow.enabled = false;
+
+            AudioManager.singleton.Play("TreeImpact");
             StartCoroutine(FallAnimation(0.2f));
+            StartCoroutine(CameraShake.singelton.ShakeCamera());
+            GameManager.singleton.currentTemperature = GameManager.singleton.minTemperature;
         }
         else if (other.CompareTag("HotCocoa"))
         {
-            if(GameManager.singleton.currentTemperature <= 32)
+            AudioManager.singleton.Play("Drinking");
+
+            if (GameManager.singleton.currentTemperature <= 32)
             {
                 GameManager.singleton.currentTemperature += 2;
             }
@@ -133,7 +137,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    IEnumerator FallAnimation(float duration)
+    public IEnumerator FallAnimation(float duration)
     {
         Quaternion startRotation = transform.rotation;
 
