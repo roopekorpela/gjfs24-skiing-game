@@ -27,4 +27,4 @@ List of bought assets used in this game. Everything else that isn't listed here 
 - [Tiny Ski](https://kenney.nl/assets/tiny-ski)
 
 ### Audio
-- Sound effects from [Zapsplat.com](Zapsplat.com)
+- Sound effects from [Zapsplat.com](https://www.zapsplat.com/basic-member-home/)
