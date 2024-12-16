@@ -125,11 +125,11 @@ public class Player : MonoBehaviour
         {
             AudioManager.singleton.Play("Drinking");
 
-            if (GameManager.singleton.currentTemperature <= 32)
+            if (GameManager.singleton.currentTemperature <= 37)
             {
                 GameManager.singleton.currentTemperature += 2;
             }
-            else if(GameManager.singleton.currentTemperature >= 32)
+            else if(GameManager.singleton.currentTemperature >= 37)
             {
                 GameManager.singleton.currentTemperature = GameManager.singleton.maxTemperature;
             }
